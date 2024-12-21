@@ -9,12 +9,14 @@ const subtitleSize = 14;
 const textSize = 10;
 const subtextSize = 8;
 
-const font = "Helvetica";
-const boldFont = "Helvetica-Bold";
+const fontType = "Helvetica";
+const fontBoldType = "Helvetica-Bold";
+
+const lineGap = 4;
 
 const data = {
   name: "John Doe",
-  role: "Web Developer",
+  role: "Suporte",
   email: "johndoe@outlook.com",
   phone: "+55 99 999995555 (Whatsapp)",
   linkedin: "https://linkedin.com/in/johndoe",
@@ -98,39 +100,45 @@ doc.pipe(
   )
 );
 
-doc.fontSize(titleSize).font(boldFont).text(data.name, { align: "center" });
-doc.fontSize(subtitleSize).font(font).text(data.role, { align: "center" });
+doc.lineGap(lineGap);
 
-doc.fontSize(textSize);
-doc.text(`\n${data.email} | ${data.phone} | ${data.linkedin}`, {
-  align: "center",
-});
-doc.text(data.github, { align: "center" });
+doc.fontSize(titleSize).font(fontBoldType).text(data.name, { align: "center" });
+doc.fontSize(subtitleSize).font(fontType).text(data.role, { align: "center" });
 
-doc.fontSize(subtitleSize).font(boldFont).text("\n\nCertificates\n\n");
 doc
   .fontSize(textSize)
-  .font(font)
+  .text(`\n${data.email} | ${data.phone} | ${data.linkedin}`, {
+    align: "center",
+  });
+doc.text(data.github, { align: "center" });
+
+doc.fontSize(subtitleSize).font(fontBoldType).text("\nCertificates\n\n");
+doc
+  .fontSize(textSize)
+  .font(fontType)
   .text(data.certificates.join(" | "), { align: "center" });
 
-doc.fontSize(subtitleSize).font(boldFont).text("\n\nProfile\n\n");
-doc.fontSize(textSize).font(font).text(data.profile);
+doc.fontSize(subtitleSize).font(fontBoldType).text("\nProfile\n\n");
+doc.fontSize(textSize).font(fontType).text(data.profile);
 
 doc
   .fontSize(subtitleSize)
-  .font(boldFont)
-  .text("\n\nProfessional Experience\n\n");
+  .font(fontBoldType)
+  .text("\nProfessional Experience\n\n");
 data.professionalExperience.forEach((experience, index) => {
   doc
-    .font(font)
+    .font(fontBoldType)
     .fontSize(textSize)
     .text(experience.company, { continued: true })
+    .font(fontType)
     .fontSize(subtextSize)
     .text(experience.period, { align: "right" });
   doc
     .fontSize(textSize)
+    .fillColor("grey")
     .text(experience.role, { continued: true })
     .fontSize(subtextSize)
+    .fillColor("black")
     .text(experience.local, { align: "right" });
   doc.fontSize(textSize).text(experience.functions.join("\n"));
   if (index < data.professionalExperience.length - 1) {
@@ -138,12 +146,13 @@ data.professionalExperience.forEach((experience, index) => {
   }
 });
 
-doc.fontSize(subtitleSize).font(boldFont).text("\n\nEducation\n\n");
+doc.fontSize(subtitleSize).font(fontBoldType).text("\nEducation\n\n");
 data.education.forEach((item, index) => {
   doc
-    .font(font)
+    .font(fontBoldType)
     .fontSize(textSize)
     .text(item.degree, { continued: true })
+    .font(fontType)
     .fontSize(subtextSize)
     .text(item.period, { align: "right" });
   doc
@@ -156,10 +165,10 @@ data.education.forEach((item, index) => {
   }
 });
 
-doc.fontSize(subtitleSize).font(boldFont).text("\n\nLanguages\n\n");
+doc.fontSize(subtitleSize).font(fontBoldType).text("\nLanguages\n\n");
 doc
   .fontSize(textSize)
-  .font(font)
+  .font(fontType)
   .text(
     data.languages
       .map((language) => `${language.name} - ${language.level}`)
