@@ -4,9 +4,12 @@ import path from "path";
 
 const outputDirectory = "output";
 
-const titleSize = 20;
-const subtitleSize = 16;
-const textSize = 12;
+const titleSize = 22;
+const subtitleSize = 14;
+const textSize = 10;
+
+const font = "Helvetica";
+const boldFont = "Helvetica-Bold";
 
 const data = {
   name: "John Doe",
@@ -94,24 +97,33 @@ doc.pipe(
   )
 );
 
-doc.fontSize(titleSize).text(data.name, { align: "center" });
-doc.fontSize(subtitleSize).text(data.role, { align: "center" });
+doc.fontSize(titleSize).font(boldFont).text(data.name, { align: "center" });
+doc.fontSize(subtitleSize).font(font).text(data.role, { align: "center" });
 
 doc
   .fontSize(textSize)
-  .text(`${data.email} ${data.phone} ${data.linkedin}`, { align: "center" });
+  .text(`\n${data.email} | ${data.phone} | ${data.linkedin}`, {
+    align: "center",
+  });
 doc.fontSize(textSize).text(data.github, { align: "center" });
 
-doc.fontSize(subtitleSize).text("\n\nCertificates\n\n");
-doc.fontSize(textSize).text(data.certificates.join(" "), { align: "center" });
+doc.fontSize(subtitleSize).font(boldFont).text("\n\nCertificates\n\n");
+doc
+  .fontSize(textSize)
+  .font(font)
+  .text(data.certificates.join(" | "), { align: "center" });
 
-doc.fontSize(subtitleSize).text("\n\nProfile\n\n");
-doc.fontSize(textSize).text(data.profile);
+doc.fontSize(subtitleSize).font(boldFont).text("\n\nProfile\n\n");
+doc.fontSize(textSize).font(font).text(data.profile);
 
-doc.fontSize(subtitleSize).text("\n\nProfessional Experience\n\n");
+doc
+  .fontSize(subtitleSize)
+  .font(boldFont)
+  .text("\n\nProfessional Experience\n\n");
 data.professionalExperience.forEach((experience, index) => {
   doc
     .fontSize(textSize)
+    .font(font)
     .text(experience.company, { continued: true })
     .text(experience.period, { align: "right" });
   doc
@@ -124,10 +136,11 @@ data.professionalExperience.forEach((experience, index) => {
   }
 });
 
-doc.fontSize(subtitleSize).text("\n\nEducation\n\n");
+doc.fontSize(subtitleSize).font(boldFont).text("\n\nEducation\n\n");
 data.education.forEach((item, index) => {
   doc
     .fontSize(textSize)
+    .font(font)
     .text(item.degree, { continued: true })
     .text(item.period, { align: "right" });
   doc
@@ -139,9 +152,10 @@ data.education.forEach((item, index) => {
   }
 });
 
-doc.fontSize(subtitleSize).text("\n\nLanguages\n\n");
+doc.fontSize(subtitleSize).font(boldFont).text("\n\nLanguages\n\n");
 doc
   .fontSize(textSize)
+  .font(font)
   .text(
     data.languages
       .map((language) => `${language.name} - ${language.level}`)
