@@ -31,26 +31,26 @@ NewRelic | Dynatrace | Datadog.`,
       role: "Site Reliability Engineer/DevOps",
       local: "Remote, Brazil",
       period: "02/2023 – 07/2024",
-      description: [
-        `Experiência Profissional Experiência em projetos de BI/Analytics, Cloud Azure
-Databricks e Power BI.`,
-        `Experiência em SQL para manutenção e análise de banco de dados relacional.`,
-        `Experiência com Migração de Dados, entre bancos ou dados brutos de
-planilhas/terceiros.`,
-      ],
+      description: `- Experiência Profissional Experiência em projetos de BI/Analytics, Cloud Azure
+Databricks e Power BI.
+- Experiência em SQL para manutenção e análise de banco de dados relacional.
+- Experiência com Migração de Dados, entre bancos ou dados brutos de
+planilhas/terceiros.
+- Experiência com Python PySpark para ingestão de dados.
+- Experiência com nuvem (Azure, AWS).`,
     },
     {
       company: "NTT DATA Europe & Latam",
       role: "Site Reliability Engineer/DevOps",
       local: "Remote, Brazil",
       period: "02/2023 – 07/2024",
-      description: [
-        `Experiência Profissional Experiência em projetos de BI/Analytics, Cloud Azure
-Databricks e Power BI.`,
-        `Experiência em SQL para manutenção e análise de banco de dados relacional.`,
-        `Experiência com Migração de Dados, entre bancos ou dados brutos de
-planilhas/terceiros.`,
-      ],
+      description: `- Experiência Profissional Experiência em projetos de BI/Analytics, Cloud Azure
+Databricks e Power BI.
+- Experiência em SQL para manutenção e análise de banco de dados relacional.
+- Experiência com Migração de Dados, entre bancos ou dados brutos de
+planilhas/terceiros.
+- Experiência com Python PySpark para ingestão de dados.
+- Experiência com nuvem (Azure, AWS).`,
     },
   ],
   education: [
@@ -105,17 +105,21 @@ function generatePDF(data) {
     path.join("assets", "fonts", "Font Awesome 6 Brands-Regular-400.otf")
   );
 
-  doc.lineGap(lineGap);
+  doc.lineGap(lineGap); // distance between lines of text
 
+  // Name
   doc
     .fontSize(FONT_SIZE.title)
     .font(FONT_TYPE.bold)
     .text(data.name, { align: "center" });
+
+  // Role
   doc
     .fontSize(FONT_SIZE.subtitle)
     .font(FONT_TYPE.regular)
     .text(data.role, { align: "center" });
 
+  // Contact
   doc
     .fontSize(FONT_SIZE.text)
     .font("FontAwesome")
@@ -135,10 +139,11 @@ function generatePDF(data) {
     .font(FONT_TYPE.regular)
     .text(data.github);
 
+  // Certificates
   doc
     .fontSize(FONT_SIZE.subtitle)
     .font("FontAwesome")
-    .text("\n\uf0a3 ", { continued: true })
+    .text("\n\uf559 ", { continued: true })
     .font(FONT_TYPE.bold)
     .text("Certificates\n\n");
   doc
@@ -154,14 +159,16 @@ function generatePDF(data) {
     .text("Profile\n\n");
   doc.fontSize(FONT_SIZE.text).font(FONT_TYPE.regular).text(data.profile);
 
+  // Professional Experience
   doc
     .fontSize(FONT_SIZE.subtitle)
     .font("FontAwesome")
     .text("\n\uf0b1 ", { continued: true })
     .font(FONT_TYPE.bold)
-    .text("Professional Experience\n\n");
-  data.professionalExperience.forEach((experience, index) => {
+    .text("Professional Experience\n");
+  data.professionalExperience.forEach((experience) => {
     doc
+      .text("\n") // on first execution size is FONT_SIZE.subtitle, on subsequents is FONT_SIZE.text
       .font(FONT_TYPE.bold)
       .fontSize(FONT_SIZE.text)
       .text(experience.company, { continued: true })
@@ -175,12 +182,10 @@ function generatePDF(data) {
       .fontSize(FONT_SIZE.subtext)
       .fillColor(TEXT_COLOR.primary)
       .text(experience.local, { align: "right" });
-    doc.fontSize(FONT_SIZE.text).text(experience.description.join("\n"));
-    if (index < data.professionalExperience.length - 1) {
-      doc.fontSize(FONT_SIZE.text).text("\n");
-    }
+    doc.fontSize(FONT_SIZE.text).text(experience.description);
   });
 
+  // Education
   doc
     .fontSize(FONT_SIZE.subtitle)
     .font("FontAwesome")
@@ -197,28 +202,34 @@ function generatePDF(data) {
       .text(item.period, { align: "right" });
     doc
       .fontSize(FONT_SIZE.text)
+      .fillColor(TEXT_COLOR.secondary)
       .text(item.institution, { continued: true })
       .fontSize(FONT_SIZE.subtext)
+      .fillColor(TEXT_COLOR.primary)
       .text(item.local, { align: "right" });
     if (index < data.education.length - 1) {
       doc.fontSize(FONT_SIZE.text).text("\n");
     }
   });
 
+  // Languages
   doc
     .fontSize(FONT_SIZE.subtitle)
     .font("FontAwesome")
     .text("\n\uf0ac ", { continued: true })
     .font(FONT_TYPE.bold)
     .text("Languages\n\n");
-  doc
-    .fontSize(FONT_SIZE.text)
-    .font(FONT_TYPE.regular)
-    .text(
-      data.languages
-        .map((language) => `${language.name} - ${language.level}`)
-        .join("\n")
-    );
+
+  doc.fontSize(FONT_SIZE.text).font(FONT_TYPE.regular);
+
+  data.languages.forEach((language) => {
+    doc
+      .font(FONT_TYPE.bold)
+      .text(language.name, { continued: true })
+      .font(FONT_TYPE.regular)
+      .text(" - ", { continued: true })
+      .text(language.level);
+  });
 
   doc.end();
 }
