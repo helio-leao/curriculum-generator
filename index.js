@@ -39,7 +39,7 @@ NewRelic | Dynatrace | Datadog.`,
       role: "Site Reliability Engineer/DevOps",
       local: "Remote, Brazil",
       period: "02/2023 – 07/2024",
-      functions: [
+      description: [
         `Experiência Profissional Experiência em projetos de BI/Analytics, Cloud Azure
 Databricks e Power BI.`,
         `Experiência em SQL para manutenção e análise de banco de dados relacional.`,
@@ -52,7 +52,7 @@ planilhas/terceiros.`,
       role: "Site Reliability Engineer/DevOps",
       local: "Remote, Brazil",
       period: "02/2023 – 07/2024",
-      functions: [
+      description: [
         `Experiência Profissional Experiência em projetos de BI/Analytics, Cloud Azure
 Databricks e Power BI.`,
         `Experiência em SQL para manutenção e análise de banco de dados relacional.`,
@@ -140,7 +140,7 @@ data.professionalExperience.forEach((experience, index) => {
     .fontSize(subtextSize)
     .fillColor("black")
     .text(experience.local, { align: "right" });
-  doc.fontSize(textSize).text(experience.functions.join("\n"));
+  doc.fontSize(textSize).text(experience.description.join("\n"));
   if (index < data.professionalExperience.length - 1) {
     doc.fontSize(textSize).text("\n");
   }
