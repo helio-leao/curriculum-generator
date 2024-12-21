@@ -1,16 +1,9 @@
 import PDFDocument from "pdfkit";
 import fs from "fs";
 import path from "path";
+import { FONT_SIZE, FONT_TYPE, TEXT_COLOR } from "./constants.js";
 
 const outputDirectory = "output";
-
-const titleSize = 22;
-const subtitleSize = 14;
-const textSize = 10;
-const subtextSize = 8;
-
-const fontType = "Helvetica";
-const fontBoldType = "Helvetica-Bold";
 
 const lineGap = 4;
 
@@ -102,73 +95,82 @@ doc.pipe(
 
 doc.lineGap(lineGap);
 
-doc.fontSize(titleSize).font(fontBoldType).text(data.name, { align: "center" });
-doc.fontSize(subtitleSize).font(fontType).text(data.role, { align: "center" });
+doc
+  .fontSize(FONT_SIZE.title)
+  .font(FONT_TYPE.bold)
+  .text(data.name, { align: "center" });
+doc
+  .fontSize(FONT_SIZE.subtitle)
+  .font(FONT_TYPE.regular)
+  .text(data.role, { align: "center" });
 
 doc
-  .fontSize(textSize)
+  .fontSize(FONT_SIZE.text)
   .text(`\n${data.email} | ${data.phone} | ${data.linkedin}`, {
     align: "center",
   });
 doc.text(data.github, { align: "center" });
 
-doc.fontSize(subtitleSize).font(fontBoldType).text("\nCertificates\n\n");
 doc
-  .fontSize(textSize)
-  .font(fontType)
+  .fontSize(FONT_SIZE.subtitle)
+  .font(FONT_TYPE.bold)
+  .text("\nCertificates\n\n");
+doc
+  .fontSize(FONT_SIZE.text)
+  .font(FONT_TYPE.regular)
   .text(data.certificates.join(" | "), { align: "center" });
 
-doc.fontSize(subtitleSize).font(fontBoldType).text("\nProfile\n\n");
-doc.fontSize(textSize).font(fontType).text(data.profile);
+doc.fontSize(FONT_SIZE.subtitle).font(FONT_TYPE.bold).text("\nProfile\n\n");
+doc.fontSize(FONT_SIZE.text).font(FONT_TYPE.regular).text(data.profile);
 
 doc
-  .fontSize(subtitleSize)
-  .font(fontBoldType)
+  .fontSize(FONT_SIZE.subtitle)
+  .font(FONT_TYPE.bold)
   .text("\nProfessional Experience\n\n");
 data.professionalExperience.forEach((experience, index) => {
   doc
-    .font(fontBoldType)
-    .fontSize(textSize)
+    .font(FONT_TYPE.bold)
+    .fontSize(FONT_SIZE.text)
     .text(experience.company, { continued: true })
-    .font(fontType)
-    .fontSize(subtextSize)
+    .font(FONT_TYPE.regular)
+    .fontSize(FONT_SIZE.subtext)
     .text(experience.period, { align: "right" });
   doc
-    .fontSize(textSize)
-    .fillColor("grey")
+    .fontSize(FONT_SIZE.text)
+    .fillColor(TEXT_COLOR.secondary)
     .text(experience.role, { continued: true })
-    .fontSize(subtextSize)
-    .fillColor("black")
+    .fontSize(FONT_SIZE.subtext)
+    .fillColor(TEXT_COLOR.primary)
     .text(experience.local, { align: "right" });
-  doc.fontSize(textSize).text(experience.description.join("\n"));
+  doc.fontSize(FONT_SIZE.text).text(experience.description.join("\n"));
   if (index < data.professionalExperience.length - 1) {
-    doc.fontSize(textSize).text("\n");
+    doc.fontSize(FONT_SIZE.text).text("\n");
   }
 });
 
-doc.fontSize(subtitleSize).font(fontBoldType).text("\nEducation\n\n");
+doc.fontSize(FONT_SIZE.subtitle).font(FONT_TYPE.bold).text("\nEducation\n\n");
 data.education.forEach((item, index) => {
   doc
-    .font(fontBoldType)
-    .fontSize(textSize)
+    .font(FONT_TYPE.bold)
+    .fontSize(FONT_SIZE.text)
     .text(item.degree, { continued: true })
-    .font(fontType)
-    .fontSize(subtextSize)
+    .font(FONT_TYPE.regular)
+    .fontSize(FONT_SIZE.subtext)
     .text(item.period, { align: "right" });
   doc
-    .fontSize(textSize)
+    .fontSize(FONT_SIZE.text)
     .text(item.institution, { continued: true })
-    .fontSize(subtextSize)
+    .fontSize(FONT_SIZE.subtext)
     .text(item.local, { align: "right" });
   if (index < data.education.length - 1) {
-    doc.fontSize(textSize).text("\n");
+    doc.fontSize(FONT_SIZE.text).text("\n");
   }
 });
 
-doc.fontSize(subtitleSize).font(fontBoldType).text("\nLanguages\n\n");
+doc.fontSize(FONT_SIZE.subtitle).font(FONT_TYPE.bold).text("\nLanguages\n\n");
 doc
-  .fontSize(textSize)
-  .font(fontType)
+  .fontSize(FONT_SIZE.text)
+  .font(FONT_TYPE.regular)
   .text(
     data.languages
       .map((language) => `${language.name} - ${language.level}`)
