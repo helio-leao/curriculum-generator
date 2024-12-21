@@ -145,19 +145,21 @@ function generatePDF(data) {
     .font("FontAwesome")
     .text("\n\uf559 ", { continued: true })
     .font(FONT_TYPE.bold)
-    .text("Certificates\n\n");
-  doc
+    .text("Certificates\n\n")
     .fontSize(FONT_SIZE.text)
     .font(FONT_TYPE.regular)
-    .text(data.certificates.join(" | "), { align: "center" });
+    .text(data.certificates.join(" • "), { align: "center" });
 
+  // Profile
   doc
     .fontSize(FONT_SIZE.subtitle)
     .font("FontAwesome")
     .text("\n\uf2bb ", { continued: true })
     .font(FONT_TYPE.bold)
-    .text("Profile\n\n");
-  doc.fontSize(FONT_SIZE.text).font(FONT_TYPE.regular).text(data.profile);
+    .text("Profile\n\n")
+    .fontSize(FONT_SIZE.text)
+    .font(FONT_TYPE.regular)
+    .text(data.profile);
 
   // Professional Experience
   doc
@@ -168,21 +170,21 @@ function generatePDF(data) {
     .text("Professional Experience\n");
   data.professionalExperience.forEach((experience) => {
     doc
-      .text("\n") // on first execution size is FONT_SIZE.subtitle, on subsequents is FONT_SIZE.text
+      .text("\n")
       .font(FONT_TYPE.bold)
       .fontSize(FONT_SIZE.text)
       .text(experience.company, { continued: true })
       .font(FONT_TYPE.regular)
       .fontSize(FONT_SIZE.subtext)
-      .text(experience.period, { align: "right" });
-    doc
+      .text(experience.period, { align: "right" })
       .fontSize(FONT_SIZE.text)
       .fillColor(TEXT_COLOR.secondary)
       .text(experience.role, { continued: true })
       .fontSize(FONT_SIZE.subtext)
       .fillColor(TEXT_COLOR.primary)
-      .text(experience.local, { align: "right" });
-    doc.fontSize(FONT_SIZE.text).text(experience.description);
+      .text(experience.local, { align: "right" })
+      .fontSize(FONT_SIZE.text)
+      .text(experience.description);
   });
 
   // Education
@@ -191,25 +193,22 @@ function generatePDF(data) {
     .font("FontAwesome")
     .text("\n\uf19d ", { continued: true })
     .font(FONT_TYPE.bold)
-    .text("Education\n\n");
-  data.education.forEach((item, index) => {
+    .text("Education\n");
+  data.education.forEach((item) => {
     doc
+      .text("\n")
       .font(FONT_TYPE.bold)
       .fontSize(FONT_SIZE.text)
       .text(item.degree, { continued: true })
       .font(FONT_TYPE.regular)
       .fontSize(FONT_SIZE.subtext)
-      .text(item.period, { align: "right" });
-    doc
+      .text(item.period, { align: "right" })
       .fontSize(FONT_SIZE.text)
       .fillColor(TEXT_COLOR.secondary)
       .text(item.institution, { continued: true })
       .fontSize(FONT_SIZE.subtext)
       .fillColor(TEXT_COLOR.primary)
       .text(item.local, { align: "right" });
-    if (index < data.education.length - 1) {
-      doc.fontSize(FONT_SIZE.text).text("\n");
-    }
   });
 
   // Languages
@@ -218,10 +217,8 @@ function generatePDF(data) {
     .font("FontAwesome")
     .text("\n\uf0ac ", { continued: true })
     .font(FONT_TYPE.bold)
-    .text("Languages\n\n");
-
-  doc.fontSize(FONT_SIZE.text).font(FONT_TYPE.regular);
-
+    .text("Languages\n\n")
+    .fontSize(FONT_SIZE.text);
   data.languages.forEach((language) => {
     doc
       .font(FONT_TYPE.bold)
