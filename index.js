@@ -12,8 +12,8 @@ const data = {
   name: "John Doe",
   role: "Web Developer",
   email: "johndoe@outlook.com",
-  phone: "+55 99 999999999 (Whatsapp)",
-  linkedin: "linkedin.com/in/johndoe",
+  phone: "+55 99 999995555 (Whatsapp)",
+  linkedin: "https://linkedin.com/in/johndoe",
   github: "https://github.com/johndoe",
   certificates: [
     "Microsoft Azure AZ-900",
@@ -85,6 +85,7 @@ fs.mkdirSync(outputDirectory, { recursive: true });
 
 const doc = new PDFDocument({
   margin: 50, // sets all margins to 50 points (0.67 inches)
+  size: "A4",
 });
 
 doc.pipe(
@@ -94,13 +95,12 @@ doc.pipe(
 );
 
 doc.fontSize(titleSize).text(data.name, { align: "center" });
-doc.fontSize(textSize).text(data.role, { align: "center" });
+doc.fontSize(subtitleSize).text(data.role, { align: "center" });
 
 doc
   .fontSize(textSize)
-  .text(`\n${data.email} ${data.phone} ${data.linkedin} ${data.github}`, {
-    align: "center",
-  });
+  .text(`${data.email} ${data.phone} ${data.linkedin}`, { align: "center" });
+doc.fontSize(textSize).text(data.github, { align: "center" });
 
 doc.fontSize(subtitleSize).text("\n\nCertificates\n\n");
 doc.fontSize(textSize).text(data.certificates.join(" "), { align: "center" });
@@ -110,8 +110,14 @@ doc.fontSize(textSize).text(data.profile);
 
 doc.fontSize(subtitleSize).text("\n\nProfessional Experience\n\n");
 data.professionalExperience.forEach((experience, index) => {
-  doc.fontSize(textSize).text(experience.company);
-  doc.fontSize(textSize).text(experience.role);
+  doc
+    .fontSize(textSize)
+    .text(experience.company, { continued: true })
+    .text(experience.period, { align: "right" });
+  doc
+    .fontSize(textSize)
+    .text(experience.role, { continued: true })
+    .text(experience.local, { align: "right" });
   doc.fontSize(textSize).text(experience.functions.join("\n"));
   if (index < data.professionalExperience.length - 1) {
     doc.fontSize(textSize).text("\n");
@@ -120,8 +126,14 @@ data.professionalExperience.forEach((experience, index) => {
 
 doc.fontSize(subtitleSize).text("\n\nEducation\n\n");
 data.education.forEach((item, index) => {
-  doc.fontSize(textSize).text(item.degree);
-  doc.fontSize(textSize).text(item.institution);
+  doc
+    .fontSize(textSize)
+    .text(item.degree, { continued: true })
+    .text(item.period, { align: "right" });
+  doc
+    .fontSize(textSize)
+    .text(item.institution, { continued: true })
+    .text(item.local, { align: "right" });
   if (index < data.education.length - 1) {
     doc.fontSize(textSize).text("\n");
   }
