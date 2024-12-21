@@ -1,7 +1,12 @@
 import PDFDocument from "pdfkit";
 import fs from "fs";
 import path from "path";
-import { FONT_SIZE, FONT_TYPE, TEXT_COLOR } from "./constants.js";
+import {
+  FONT_SIZE,
+  FONT_TYPE,
+  TEXT_COLOR,
+  FONT_AWESOME_ICON,
+} from "./constants.js";
 
 const outputDirectory = "output";
 const lineGap = 4;
@@ -123,19 +128,19 @@ function generatePDF(data) {
   doc
     .fontSize(FONT_SIZE.text)
     .font(FONT_TYPE.fontAwesome)
-    .text("\n\uf0e0 ", { continued: true })
+    .text(`\n${FONT_AWESOME_ICON.envelope} `, { continued: true })
     .font(FONT_TYPE.regular)
     .text(data.email, { continued: true })
     .font(FONT_TYPE.fontAwesome)
-    .text(" \uf095 ", { continued: true })
+    .text(` ${FONT_AWESOME_ICON.phone} `, { continued: true })
     .font(FONT_TYPE.regular)
     .text(data.phone, { continued: true })
     .font(FONT_TYPE.fontAwesomeBrands)
-    .text(" \uf08c ", { continued: true })
+    .text(` ${FONT_AWESOME_ICON.linkedin} `, { continued: true })
     .font(FONT_TYPE.regular)
     .text(data.linkedin, { continued: true })
     .font(FONT_TYPE.fontAwesomeBrands)
-    .text(" \uf09b ", { continued: true })
+    .text(` ${FONT_AWESOME_ICON.github} `, { continued: true })
     .font(FONT_TYPE.regular)
     .text(data.github);
 
@@ -143,7 +148,7 @@ function generatePDF(data) {
   doc
     .fontSize(FONT_SIZE.subtitle)
     .font(FONT_TYPE.fontAwesome)
-    .text("\n\uf559 ", { continued: true })
+    .text(`\n${FONT_AWESOME_ICON.award} `, { continued: true })
     .font(FONT_TYPE.bold)
     .text("Certificates\n\n")
     .fontSize(FONT_SIZE.text)
@@ -154,7 +159,7 @@ function generatePDF(data) {
   doc
     .fontSize(FONT_SIZE.subtitle)
     .font(FONT_TYPE.fontAwesome)
-    .text("\n\uf2bb ", { continued: true })
+    .text(`\n${FONT_AWESOME_ICON.addressCard} `, { continued: true })
     .font(FONT_TYPE.bold)
     .text("Profile\n\n")
     .fontSize(FONT_SIZE.text)
@@ -165,7 +170,7 @@ function generatePDF(data) {
   doc
     .fontSize(FONT_SIZE.subtitle)
     .font(FONT_TYPE.fontAwesome)
-    .text("\n\uf0b1 ", { continued: true })
+    .text(`\n${FONT_AWESOME_ICON.briefcase} `, { continued: true })
     .font(FONT_TYPE.bold)
     .text("Professional Experience\n");
   data.professionalExperience.forEach((experience) => {
@@ -191,7 +196,7 @@ function generatePDF(data) {
   doc
     .fontSize(FONT_SIZE.subtitle)
     .font(FONT_TYPE.fontAwesome)
-    .text("\n\uf19d ", { continued: true })
+    .text(`\n${FONT_AWESOME_ICON.graduationCap} `, { continued: true })
     .font(FONT_TYPE.bold)
     .text("Education\n");
   data.education.forEach((item) => {
@@ -215,7 +220,7 @@ function generatePDF(data) {
   doc
     .fontSize(FONT_SIZE.subtitle)
     .font(FONT_TYPE.fontAwesome)
-    .text("\n\uf0ac ", { continued: true })
+    .text(`\n${FONT_AWESOME_ICON.globe} `, { continued: true })
     .font(FONT_TYPE.bold)
     .text("Languages\n\n")
     .fontSize(FONT_SIZE.text);
