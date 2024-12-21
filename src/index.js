@@ -11,8 +11,8 @@ const data = {
   role: "Suporte",
   email: "johndoe@email.com",
   phone: "+55 (99) 9.9999-5555 (Whatsapp)",
-  linkedin: "https://linkedin.com/in/johndoe",
-  github: "https://github.com/johndoe",
+  linkedin: "linkedin.com/in/johndoe",
+  github: "github.com/johndoe",
   certificates: [
     "Microsoft Azure AZ-900",
     "DevOps Institute - SRE",
@@ -96,6 +96,15 @@ function generatePDF(data) {
     )
   );
 
+  doc.registerFont(
+    "FontAwesome",
+    path.join("assets", "fonts", "Font Awesome 6 Free-Solid-900.otf")
+  );
+  doc.registerFont(
+    "FontAwesomeBrands",
+    path.join("assets", "fonts", "Font Awesome 6 Brands-Regular-400.otf")
+  );
+
   doc.lineGap(lineGap);
 
   doc
@@ -109,27 +118,48 @@ function generatePDF(data) {
 
   doc
     .fontSize(FONT_SIZE.text)
-    .text(`\n${data.email} | ${data.phone} | ${data.linkedin}`, {
-      align: "center",
-    });
-  doc.text(data.github, { align: "center" });
+    .font("FontAwesome")
+    .text("\uf0e0 ", { continued: true })
+    .font(FONT_TYPE.regular)
+    .text(data.email, { continued: true })
+    .font("FontAwesome")
+    .text(" \uf095 ", { continued: true })
+    .font(FONT_TYPE.regular)
+    .text(data.phone, { continued: true })
+    .font("FontAwesomeBrands")
+    .text(" \uf08c ", { continued: true })
+    .font(FONT_TYPE.regular)
+    .text(data.linkedin, { continued: true })
+    .font("FontAwesomeBrands")
+    .text(" \uf09b ", { continued: true })
+    .font(FONT_TYPE.regular)
+    .text(data.github);
 
   doc
     .fontSize(FONT_SIZE.subtitle)
+    .font("FontAwesome")
+    .text("\n\uf0a3 ", { continued: true })
     .font(FONT_TYPE.bold)
-    .text("\nCertificates\n\n");
+    .text("Certificates\n\n");
   doc
     .fontSize(FONT_SIZE.text)
     .font(FONT_TYPE.regular)
     .text(data.certificates.join(" | "), { align: "center" });
 
-  doc.fontSize(FONT_SIZE.subtitle).font(FONT_TYPE.bold).text("\nProfile\n\n");
+  doc
+    .fontSize(FONT_SIZE.subtitle)
+    .font("FontAwesome")
+    .text("\n\uf2bb ", { continued: true })
+    .font(FONT_TYPE.bold)
+    .text("Profile\n\n");
   doc.fontSize(FONT_SIZE.text).font(FONT_TYPE.regular).text(data.profile);
 
   doc
     .fontSize(FONT_SIZE.subtitle)
+    .font("FontAwesome")
+    .text("\n\uf0b1 ", { continued: true })
     .font(FONT_TYPE.bold)
-    .text("\nProfessional Experience\n\n");
+    .text("Professional Experience\n\n");
   data.professionalExperience.forEach((experience, index) => {
     doc
       .font(FONT_TYPE.bold)
@@ -151,7 +181,12 @@ function generatePDF(data) {
     }
   });
 
-  doc.fontSize(FONT_SIZE.subtitle).font(FONT_TYPE.bold).text("\nEducation\n\n");
+  doc
+    .fontSize(FONT_SIZE.subtitle)
+    .font("FontAwesome")
+    .text("\n\uf19d ", { continued: true })
+    .font(FONT_TYPE.bold)
+    .text("Education\n\n");
   data.education.forEach((item, index) => {
     doc
       .font(FONT_TYPE.bold)
@@ -170,7 +205,12 @@ function generatePDF(data) {
     }
   });
 
-  doc.fontSize(FONT_SIZE.subtitle).font(FONT_TYPE.bold).text("\nLanguages\n\n");
+  doc
+    .fontSize(FONT_SIZE.subtitle)
+    .font("FontAwesome")
+    .text("\n\uf0ac ", { continued: true })
+    .font(FONT_TYPE.bold)
+    .text("Languages\n\n");
   doc
     .fontSize(FONT_SIZE.text)
     .font(FONT_TYPE.regular)
