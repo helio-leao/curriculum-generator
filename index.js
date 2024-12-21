@@ -7,6 +7,7 @@ const outputDirectory = "output";
 const titleSize = 22;
 const subtitleSize = 14;
 const textSize = 10;
+const subtextSize = 8;
 
 const font = "Helvetica";
 const boldFont = "Helvetica-Bold";
@@ -121,12 +122,15 @@ doc
   .text("\n\nProfessional Experience\n\n");
 data.professionalExperience.forEach((experience, index) => {
   doc
-    .fontSize(textSize)
     .font(font)
+    .fontSize(textSize)
     .text(experience.company, { continued: true })
+    .fontSize(subtextSize)
     .text(experience.period, { align: "right" });
   doc
+    .fontSize(textSize)
     .text(experience.role, { continued: true })
+    .fontSize(subtextSize)
     .text(experience.local, { align: "right" });
   doc.fontSize(textSize).text(experience.functions.join("\n"));
   if (index < data.professionalExperience.length - 1) {
@@ -137,12 +141,15 @@ data.professionalExperience.forEach((experience, index) => {
 doc.fontSize(subtitleSize).font(boldFont).text("\n\nEducation\n\n");
 data.education.forEach((item, index) => {
   doc
-    .fontSize(textSize)
     .font(font)
+    .fontSize(textSize)
     .text(item.degree, { continued: true })
+    .fontSize(subtextSize)
     .text(item.period, { align: "right" });
   doc
+    .fontSize(textSize)
     .text(item.institution, { continued: true })
+    .fontSize(subtextSize)
     .text(item.local, { align: "right" });
   if (index < data.education.length - 1) {
     doc.fontSize(textSize).text("\n");
