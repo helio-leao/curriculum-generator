@@ -119,7 +119,7 @@ function generatePDF(data) {
   doc
     .fontSize(FONT_SIZE.text)
     .font("FontAwesome")
-    .text("\uf0e0 ", { continued: true })
+    .text("\n\uf0e0 ", { continued: true })
     .font(FONT_TYPE.regular)
     .text(data.email, { continued: true })
     .font("FontAwesome")
