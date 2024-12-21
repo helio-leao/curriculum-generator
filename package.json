@@ -1,0 +1,16 @@
+{
+  "name": "curriculum-generator",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "export": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "pdfkit": "^0.15.2"
+  }
+}
