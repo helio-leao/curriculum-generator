@@ -8,6 +8,8 @@ export const FONT_SIZE = {
 export const FONT_TYPE = {
   regular: "Helvetica",
   bold: "Helvetica-Bold",
+  fontAwesome: "FontAwesome",
+  fontAwesomeBrands: "FontAwesomeBrands",
 };
 export const TEXT_COLOR = {
   primary: "black",

@@ -97,11 +97,11 @@ function generatePDF(data) {
   );
 
   doc.registerFont(
-    "FontAwesome",
+    FONT_TYPE.fontAwesome,
     path.join("assets", "fonts", "Font Awesome 6 Free-Solid-900.otf")
   );
   doc.registerFont(
-    "FontAwesomeBrands",
+    FONT_TYPE.fontAwesomeBrands,
     path.join("assets", "fonts", "Font Awesome 6 Brands-Regular-400.otf")
   );
 
@@ -122,19 +122,19 @@ function generatePDF(data) {
   // Contact
   doc
     .fontSize(FONT_SIZE.text)
-    .font("FontAwesome")
+    .font(FONT_TYPE.fontAwesome)
     .text("\n\uf0e0 ", { continued: true })
     .font(FONT_TYPE.regular)
     .text(data.email, { continued: true })
-    .font("FontAwesome")
+    .font(FONT_TYPE.fontAwesome)
     .text(" \uf095 ", { continued: true })
     .font(FONT_TYPE.regular)
     .text(data.phone, { continued: true })
-    .font("FontAwesomeBrands")
+    .font(FONT_TYPE.fontAwesomeBrands)
     .text(" \uf08c ", { continued: true })
     .font(FONT_TYPE.regular)
     .text(data.linkedin, { continued: true })
-    .font("FontAwesomeBrands")
+    .font(FONT_TYPE.fontAwesomeBrands)
     .text(" \uf09b ", { continued: true })
     .font(FONT_TYPE.regular)
     .text(data.github);
@@ -142,7 +142,7 @@ function generatePDF(data) {
   // Certificates
   doc
     .fontSize(FONT_SIZE.subtitle)
-    .font("FontAwesome")
+    .font(FONT_TYPE.fontAwesome)
     .text("\n\uf559 ", { continued: true })
     .font(FONT_TYPE.bold)
     .text("Certificates\n\n")
@@ -153,7 +153,7 @@ function generatePDF(data) {
   // Profile
   doc
     .fontSize(FONT_SIZE.subtitle)
-    .font("FontAwesome")
+    .font(FONT_TYPE.fontAwesome)
     .text("\n\uf2bb ", { continued: true })
     .font(FONT_TYPE.bold)
     .text("Profile\n\n")
@@ -164,7 +164,7 @@ function generatePDF(data) {
   // Professional Experience
   doc
     .fontSize(FONT_SIZE.subtitle)
-    .font("FontAwesome")
+    .font(FONT_TYPE.fontAwesome)
     .text("\n\uf0b1 ", { continued: true })
     .font(FONT_TYPE.bold)
     .text("Professional Experience\n");
@@ -190,7 +190,7 @@ function generatePDF(data) {
   // Education
   doc
     .fontSize(FONT_SIZE.subtitle)
-    .font("FontAwesome")
+    .font(FONT_TYPE.fontAwesome)
     .text("\n\uf19d ", { continued: true })
     .font(FONT_TYPE.bold)
     .text("Education\n");
@@ -214,7 +214,7 @@ function generatePDF(data) {
   // Languages
   doc
     .fontSize(FONT_SIZE.subtitle)
-    .font("FontAwesome")
+    .font(FONT_TYPE.fontAwesome)
     .text("\n\uf0ac ", { continued: true })
     .font(FONT_TYPE.bold)
     .text("Languages\n\n")
