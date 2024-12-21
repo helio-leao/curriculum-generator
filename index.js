@@ -4,14 +4,13 @@ import path from "path";
 import { FONT_SIZE, FONT_TYPE, TEXT_COLOR } from "./constants.js";
 
 const outputDirectory = "output";
-
 const lineGap = 4;
 
 const data = {
   name: "John Doe",
   role: "Suporte",
-  email: "johndoe@outlook.com",
-  phone: "+55 99 999995555 (Whatsapp)",
+  email: "johndoe@email.com",
+  phone: "+55 (99) 9.9999-5555 (Whatsapp)",
   linkedin: "https://linkedin.com/in/johndoe",
   github: "https://github.com/johndoe",
   certificates: [
@@ -80,101 +79,105 @@ planilhas/terceiros.`,
   ],
 };
 
-fs.mkdirSync(outputDirectory, { recursive: true });
+function generatePDF(data) {
+  fs.mkdirSync(outputDirectory, { recursive: true });
 
-const doc = new PDFDocument({
-  margin: 50, // sets all margins to 50 points (0.67 inches)
-  size: "A4",
-});
-
-doc.pipe(
-  fs.createWriteStream(
-    path.join(outputDirectory, `${data.name} ${Date.now()}.pdf`)
-  )
-);
-
-doc.lineGap(lineGap);
-
-doc
-  .fontSize(FONT_SIZE.title)
-  .font(FONT_TYPE.bold)
-  .text(data.name, { align: "center" });
-doc
-  .fontSize(FONT_SIZE.subtitle)
-  .font(FONT_TYPE.regular)
-  .text(data.role, { align: "center" });
-
-doc
-  .fontSize(FONT_SIZE.text)
-  .text(`\n${data.email} | ${data.phone} | ${data.linkedin}`, {
-    align: "center",
+  const doc = new PDFDocument({
+    margin: 50, // sets all margins to 50 points (0.67 inches)
+    size: "A4",
   });
-doc.text(data.github, { align: "center" });
 
-doc
-  .fontSize(FONT_SIZE.subtitle)
-  .font(FONT_TYPE.bold)
-  .text("\nCertificates\n\n");
-doc
-  .fontSize(FONT_SIZE.text)
-  .font(FONT_TYPE.regular)
-  .text(data.certificates.join(" | "), { align: "center" });
-
-doc.fontSize(FONT_SIZE.subtitle).font(FONT_TYPE.bold).text("\nProfile\n\n");
-doc.fontSize(FONT_SIZE.text).font(FONT_TYPE.regular).text(data.profile);
-
-doc
-  .fontSize(FONT_SIZE.subtitle)
-  .font(FONT_TYPE.bold)
-  .text("\nProfessional Experience\n\n");
-data.professionalExperience.forEach((experience, index) => {
-  doc
-    .font(FONT_TYPE.bold)
-    .fontSize(FONT_SIZE.text)
-    .text(experience.company, { continued: true })
-    .font(FONT_TYPE.regular)
-    .fontSize(FONT_SIZE.subtext)
-    .text(experience.period, { align: "right" });
-  doc
-    .fontSize(FONT_SIZE.text)
-    .fillColor(TEXT_COLOR.secondary)
-    .text(experience.role, { continued: true })
-    .fontSize(FONT_SIZE.subtext)
-    .fillColor(TEXT_COLOR.primary)
-    .text(experience.local, { align: "right" });
-  doc.fontSize(FONT_SIZE.text).text(experience.description.join("\n"));
-  if (index < data.professionalExperience.length - 1) {
-    doc.fontSize(FONT_SIZE.text).text("\n");
-  }
-});
-
-doc.fontSize(FONT_SIZE.subtitle).font(FONT_TYPE.bold).text("\nEducation\n\n");
-data.education.forEach((item, index) => {
-  doc
-    .font(FONT_TYPE.bold)
-    .fontSize(FONT_SIZE.text)
-    .text(item.degree, { continued: true })
-    .font(FONT_TYPE.regular)
-    .fontSize(FONT_SIZE.subtext)
-    .text(item.period, { align: "right" });
-  doc
-    .fontSize(FONT_SIZE.text)
-    .text(item.institution, { continued: true })
-    .fontSize(FONT_SIZE.subtext)
-    .text(item.local, { align: "right" });
-  if (index < data.education.length - 1) {
-    doc.fontSize(FONT_SIZE.text).text("\n");
-  }
-});
-
-doc.fontSize(FONT_SIZE.subtitle).font(FONT_TYPE.bold).text("\nLanguages\n\n");
-doc
-  .fontSize(FONT_SIZE.text)
-  .font(FONT_TYPE.regular)
-  .text(
-    data.languages
-      .map((language) => `${language.name} - ${language.level}`)
-      .join("\n")
+  doc.pipe(
+    fs.createWriteStream(
+      path.join(outputDirectory, `${data.name} ${Date.now()}.pdf`)
+    )
   );
 
-doc.end();
+  doc.lineGap(lineGap);
+
+  doc
+    .fontSize(FONT_SIZE.title)
+    .font(FONT_TYPE.bold)
+    .text(data.name, { align: "center" });
+  doc
+    .fontSize(FONT_SIZE.subtitle)
+    .font(FONT_TYPE.regular)
+    .text(data.role, { align: "center" });
+
+  doc
+    .fontSize(FONT_SIZE.text)
+    .text(`\n${data.email} | ${data.phone} | ${data.linkedin}`, {
+      align: "center",
+    });
+  doc.text(data.github, { align: "center" });
+
+  doc
+    .fontSize(FONT_SIZE.subtitle)
+    .font(FONT_TYPE.bold)
+    .text("\nCertificates\n\n");
+  doc
+    .fontSize(FONT_SIZE.text)
+    .font(FONT_TYPE.regular)
+    .text(data.certificates.join(" | "), { align: "center" });
+
+  doc.fontSize(FONT_SIZE.subtitle).font(FONT_TYPE.bold).text("\nProfile\n\n");
+  doc.fontSize(FONT_SIZE.text).font(FONT_TYPE.regular).text(data.profile);
+
+  doc
+    .fontSize(FONT_SIZE.subtitle)
+    .font(FONT_TYPE.bold)
+    .text("\nProfessional Experience\n\n");
+  data.professionalExperience.forEach((experience, index) => {
+    doc
+      .font(FONT_TYPE.bold)
+      .fontSize(FONT_SIZE.text)
+      .text(experience.company, { continued: true })
+      .font(FONT_TYPE.regular)
+      .fontSize(FONT_SIZE.subtext)
+      .text(experience.period, { align: "right" });
+    doc
+      .fontSize(FONT_SIZE.text)
+      .fillColor(TEXT_COLOR.secondary)
+      .text(experience.role, { continued: true })
+      .fontSize(FONT_SIZE.subtext)
+      .fillColor(TEXT_COLOR.primary)
+      .text(experience.local, { align: "right" });
+    doc.fontSize(FONT_SIZE.text).text(experience.description.join("\n"));
+    if (index < data.professionalExperience.length - 1) {
+      doc.fontSize(FONT_SIZE.text).text("\n");
+    }
+  });
+
+  doc.fontSize(FONT_SIZE.subtitle).font(FONT_TYPE.bold).text("\nEducation\n\n");
+  data.education.forEach((item, index) => {
+    doc
+      .font(FONT_TYPE.bold)
+      .fontSize(FONT_SIZE.text)
+      .text(item.degree, { continued: true })
+      .font(FONT_TYPE.regular)
+      .fontSize(FONT_SIZE.subtext)
+      .text(item.period, { align: "right" });
+    doc
+      .fontSize(FONT_SIZE.text)
+      .text(item.institution, { continued: true })
+      .fontSize(FONT_SIZE.subtext)
+      .text(item.local, { align: "right" });
+    if (index < data.education.length - 1) {
+      doc.fontSize(FONT_SIZE.text).text("\n");
+    }
+  });
+
+  doc.fontSize(FONT_SIZE.subtitle).font(FONT_TYPE.bold).text("\nLanguages\n\n");
+  doc
+    .fontSize(FONT_SIZE.text)
+    .font(FONT_TYPE.regular)
+    .text(
+      data.languages
+        .map((language) => `${language.name} - ${language.level}`)
+        .join("\n")
+    );
+
+  doc.end();
+}
+
+generatePDF(data);
