@@ -89,7 +89,10 @@ function generatePDF(data) {
 
   doc.pipe(
     fs.createWriteStream(
-      path.join(outputDirectory, `${data.name} ${Date.now()}.pdf`)
+      path.join(
+        outputDirectory,
+        `${data.name.split(" ").join("_")}_${Date.now()}.pdf`
+      )
     )
   );
 
