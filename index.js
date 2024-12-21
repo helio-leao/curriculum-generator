@@ -100,12 +100,11 @@ doc.pipe(
 doc.fontSize(titleSize).font(boldFont).text(data.name, { align: "center" });
 doc.fontSize(subtitleSize).font(font).text(data.role, { align: "center" });
 
-doc
-  .fontSize(textSize)
-  .text(`\n${data.email} | ${data.phone} | ${data.linkedin}`, {
-    align: "center",
-  });
-doc.fontSize(textSize).text(data.github, { align: "center" });
+doc.fontSize(textSize);
+doc.text(`\n${data.email} | ${data.phone} | ${data.linkedin}`, {
+  align: "center",
+});
+doc.text(data.github, { align: "center" });
 
 doc.fontSize(subtitleSize).font(boldFont).text("\n\nCertificates\n\n");
 doc
@@ -127,7 +126,6 @@ data.professionalExperience.forEach((experience, index) => {
     .text(experience.company, { continued: true })
     .text(experience.period, { align: "right" });
   doc
-    .fontSize(textSize)
     .text(experience.role, { continued: true })
     .text(experience.local, { align: "right" });
   doc.fontSize(textSize).text(experience.functions.join("\n"));
@@ -144,7 +142,6 @@ data.education.forEach((item, index) => {
     .text(item.degree, { continued: true })
     .text(item.period, { align: "right" });
   doc
-    .fontSize(textSize)
     .text(item.institution, { continued: true })
     .text(item.local, { align: "right" });
   if (index < data.education.length - 1) {
